@@ -2,10 +2,17 @@ import ipywidgets as widgets
 from IPython.display import display, clear_output
 
 def starte_quiz():
-    optionen = widgets.RadioButtons(options=['Der Computer druckt das Wort Hallo auf Papier aus.',
-                                             'Es gibt eine Fehlermeldung, weil der Computer "Hallo" für einen Befehl hält, den er nicht kennt.',
-                                             'Nichts.'])
-    value=None, 
+    # Das Layout wird hier direkt übergeben, damit der lange Text sauber angezeigt wird
+    optionen = widgets.RadioButtons(
+        options=[
+            'Der Computer druckt das Wort Hallo auf Papier aus.',
+            'Es gibt eine Fehlermeldung, weil der Computer "Hallo" für einen Befehl hält, den er nicht kennt.',
+            'Nichts.'
+        ],
+        value=None, # Das 'value=None' muss IN die Klammer der RadioButtons hinein!
+        layout=widgets.Layout(width='max-content') # Verhindert das Überlappen
+    )
+    
     button = widgets.Button(description="Prüfen", button_style='info')
     ausgabe = widgets.Output()
 
@@ -14,6 +21,8 @@ def starte_quiz():
             clear_output()
             if optionen.value == 'Es gibt eine Fehlermeldung, weil der Computer "Hallo" für einen Befehl hält, den er nicht kennt.':
                 print("🎉 Richtig!")
+            elif optionen.value is None:
+                print("⚠️ Bitte wähle zuerst eine Antwort aus.")
             else:
                 print("❌ Falsch!")
 
